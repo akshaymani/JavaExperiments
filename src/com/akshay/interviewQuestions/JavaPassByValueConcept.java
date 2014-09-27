@@ -65,9 +65,9 @@ public class JavaPassByValueConcept {
 	public static void main(String[] args) {
 		// Primitive Type Experiment
 		Integer i = new Integer(4);
-		integerChange1(i); // This func changes the value of "i" to 4
+		integerChange1(i); // This func can't change value of i
 		System.out.println(i);
-		integerChange2(i); // This func will not be able to change the value though :)
+		integerChange2(i); // This func will not be able to change the value also :)
 		System.out.println(i);
 		
 		// Collection Type Experiment
@@ -79,8 +79,19 @@ public class JavaPassByValueConcept {
 		System.out.println(arr.toString());
 		arrayChange2(arr); // This func will not change the array
 		System.out.println(arr.toString());
+		
+		String a = "1234";
+		System.out.println("old value of String: " + a);
+		modifyString(a);
+		System.out.println("new value of String: " + a);
 	}
 	
+
+	private static void modifyString(String a) {
+		// below line will not be able to modify the string value
+		a = a + "000"; 
+	}
+
 
 	private static void arrayChange2(ArrayList<String> arr) {
 		// TODO Auto-generated method stub
@@ -105,7 +116,7 @@ public class JavaPassByValueConcept {
 
 	private static void integerChange1(Integer i) {
 		// TODO Auto-generated method stub
-		int k = 4;
+		int k = 5;
 		i = k;
 	}
 	
