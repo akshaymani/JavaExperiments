@@ -74,9 +74,12 @@ public class LinkedList {
 		}
 
 		LinkedList remainingReverse = recursiveReverse(linkedList.next);
+		
+		System.out.println("On Return RemainReverse : "+linkedList.getVal());
 
 		// update the tail as beginning
 		LinkedList current = remainingReverse;
+		System.out.println("RemaningReverse Current: " + current.getVal());
 		while (current.next != null) {
 			current = current.next;
 
