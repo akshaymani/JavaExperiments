@@ -61,6 +61,8 @@ If Java had pass-by-reference semantics, the foo method we defined above would h
 Think of reference parameters as being aliases for the variable passed in. When that alias is assigned, so is the variable that was passed in.
 */
 public class JavaPassByValueConcept {
+	
+	private static int[] arrInt =  new int[4];
 
 	public static void main(String[] args) {
 		// Primitive Type Experiment
@@ -82,12 +84,24 @@ public class JavaPassByValueConcept {
 		
 		String a = "1234";
 		System.out.println("old value of String: " + a);
-		modifyString(a);
+		JavaPassByValueConcept concept = new JavaPassByValueConcept();
+		concept.modifyString(a);
 		System.out.println("new value of String: " + a);
+		
+		
+		for (int m = 0; m < 4; m++) {
+			System.out.println(arrInt[m]);
+		}
+		for (int m = 0; m < 4; m++) {
+			arrInt[m] = m;
+		}
+		for (int m = 0; m < 4; m++) {
+			System.out.println(arrInt[m]);
+		}
 	}
 	
 
-	private static void modifyString(String a) {
+	private void modifyString(String a) {
 		// below line will not be able to modify the string value
 		a = a + "000"; 
 	}

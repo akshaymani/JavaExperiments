@@ -2,39 +2,51 @@ package com.akshay.interviewQuestions;
 
 import java.util.Scanner;
 
-public class MultipleTwoLongNumbers {
+class Solution {
 
 	public static void main(String[] args) {
+		try {
+			Scanner userInput = new Scanner(System.in);
+			int num1 = 0;
+			int num2 = 0;
+			if (userInput.hasNext()) {
+				int iterations = userInput.nextInt();
+				for (int k = 0; k < iterations; k++) {
+					if (userInput.hasNext())
+						num1 = userInput.nextInt();
+					if (userInput.hasNext())
+						num2 = userInput.nextInt();
+					if (num1 == 0 || num2 == 0) {
+						System.out.println("0");
+					}
+					else {
 
-		Scanner userInput = new Scanner(System.in);
-		int iterations = userInput.nextInt();
-		for (int k = 0; k < iterations; k++) {
-			int num1 = userInput.nextInt();
-			int num2 = userInput.nextInt();
-			if (num1 == 0 || num2 == 0) {
-				System.out.println("0");
-			}
-			else {
-				String answer = reverseString(multiplyStrings(String.valueOf(num1),String.valueOf(num2)));
-				int flag = 0;
-				for (int i = 0; i < answer.length(); i++) {
-					//System.out.println(answer.charAt(i));
-					if (flag==1) {
-						System.out.print(answer.charAt(i));
-					}
-					else if (flag == 0) {
-						String digit = String.valueOf(answer.charAt(i));
-						if (Integer.parseInt(digit) > 0) {
-							flag = 1;
-							System.out.print(answer.charAt(i));
+						String answer = reverseString(multiplyStrings(String.valueOf(num1),String.valueOf(num2)));
+						int flag = 0;
+						for (int i = 0; i < answer.length(); i++) {
+							//System.out.println(answer.charAt(i));
+							if (flag==1) {
+								System.out.print(answer.charAt(i));
+							}
+							else if (flag == 0) {
+								String digit = String.valueOf(answer.charAt(i));
+								if (Integer.parseInt(digit) > 0) {
+									flag = 1;
+									System.out.print(answer.charAt(i));
+								}
+							}
 						}
+						System.out.println();
 					}
+
 				}
-				System.out.println();
 			}
 		}
+		catch(Exception e) {
 
-		
+		}
+
+
 	}
 
 	private static String multiplyStrings(String val1, String val2) {
@@ -50,20 +62,17 @@ public class MultipleTwoLongNumbers {
 		//System.out.println("val1 : " + val1 + " val2: " + val2 + " Length max: " + length);
 		int currentIndex = 0;
 		int isum = 0;
-		char[] multiply = new char[1000];
+		char[] multiply = new char[100000];
 		int carryforward = 0;
 		for (int left = 0; left < length; left++) {
 			for (int right = left; right < length && left == 0; right++) {
-				// cross-multiplication logic now
 				isum = getCrossMultiplyValue(val1,val2,left,right) + carryforward;
 				carryforward = isum/10;
-				//System.out.println("Cross-Multiply Sum: " + isum + " CF: " + carryforward);
 				multiply[currentIndex++] = (char) (isum % 10 + 48);
 			}
 			if (left > 0) {
 				isum = getCrossMultiplyValue(val1,val2,left,length-1) + carryforward;
 				carryforward = isum/10;
-				//System.out.println("Cross-Multiply Sum: " + isum + " CF: " + carryforward);
 				multiply[currentIndex++] = (char) (isum % 10 + 48);
 			}
 		}
@@ -71,7 +80,7 @@ public class MultipleTwoLongNumbers {
 			multiply[currentIndex++] = (char) (carryforward % 10 + 48);
 			carryforward/=10;
 		}
-		for( ; currentIndex < 1000 ; currentIndex++) {
+		for( ; currentIndex < 100000 ; currentIndex++) {
 			multiply[currentIndex] = '0';
 		}
 
