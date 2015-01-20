@@ -6,7 +6,12 @@ public class SumStrings {
 		String val1 = "12345678";
 		String val2 = "456789";
 		
-		System.out.println(sumStrings(val1,val2)); // if sum[0] is not assigned any value , we don't get any exception - commenting line 29 will tell
+		String a = null;
+		System.out.println(a.concat("Hello"));
+		
+		String b = "";
+		System.out.println(b.concat("Hello bae"));
+		//System.out.println(sumStrings(val1,val2)); // if sum[0] is not assigned any value , we don't get any exception - commenting line 29 will tell
 	}
 
 	private static char[] sumStrings(String val1, String val2) {

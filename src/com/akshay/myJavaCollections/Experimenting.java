@@ -22,6 +22,7 @@ public class Experimenting implements Comparable<Experimenting>{
 			}
 		};
 		
+		Hashtable<String, String> hastable;
 		int[] array = new int[10];
 		List<Integer> list;
 		ArrayList<Integer> arrayList;

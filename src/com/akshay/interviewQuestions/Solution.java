@@ -1,126 +1,77 @@
 package com.akshay.interviewQuestions;
 
+import java.io.ObjectInputStream.GetField;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
-class Solution {
+public class Solution {
 
 	public static void main(String[] args) {
-		try {
-			Scanner userInput = new Scanner(System.in);
-			int num1 = 0;
-			int num2 = 0;
-			if (userInput.hasNext()) {
-				int iterations = userInput.nextInt();
-				for (int k = 0; k < iterations; k++) {
-					if (userInput.hasNext())
-						num1 = userInput.nextInt();
-					if (userInput.hasNext())
-						num2 = userInput.nextInt();
-					if (num1 == 0 || num2 == 0) {
-						System.out.println("0");
-					}
-					else {
+		/*Scanner scanner = new Scanner(System.in);
+		
+		int n = scanner.nextInt();*/
+		//System.out.println(n);
+		//System.out.println(getIntegerComplement(n));
+		/*int[] arr = {18,11,21,28,31,38,40,55,60,62};
+		System.out.println(isSumPossible(arr,66));*/
+	}
+	
+	private static int numberOfPaths(int [][]a,int m,int n) {
+		HashMap<Integer,ArrayList<Integer>> visited = new HashMap<Integer,ArrayList<Integer>>();
+		return numofPaths(a,m,n,0,0,visited);
+	}
+	
+	private static int numofPaths(int[][] a, int m, int n, int i, int j, HashMap<Integer, ArrayList<Integer>> visited) {
+		if (i == m && j == n) 
+			return 1;
+		ArrayList<Integer> visitedColumns = visited.get(i);
+		if (visitedColumns.contains(j))
+			return 0;
+		else {
+			visitedColumns.add(j);
+			visited.put(i, visitedColumns);
+		}
+		if (a[i][j] == 0)
+			return 0;
+        else
+            return numofPaths(a,m,n,i+1,j, visited) + numofPaths(a, m, n, i, j+1, visited) + 1;
+	}
 
-						String answer = reverseString(multiplyStrings(String.valueOf(num1),String.valueOf(num2)));
-						int flag = 0;
-						for (int i = 0; i < answer.length(); i++) {
-							//System.out.println(answer.charAt(i));
-							if (flag==1) {
-								System.out.print(answer.charAt(i));
-							}
-							else if (flag == 0) {
-								String digit = String.valueOf(answer.charAt(i));
-								if (Integer.parseInt(digit) > 0) {
-									flag = 1;
-									System.out.print(answer.charAt(i));
-								}
-							}
-						}
-						System.out.println();
-					}
-
+	private static int isSumPossible(int[] a, int N) { 
+		for (int i = 0 ; i < a.length; i++) {
+			for (int j = 0; j < a.length; j++) {
+				if (i != j) {
+					if (a[i] + a[j] == N)
+						return 1;
 				}
 			}
 		}
-		catch(Exception e) {
-
+		return 0;
+    }
+	
+	
+	/*private static int getIntegerComplement(int n) {
+		int temp = n;
+		String binary = "";
+		for (; temp>0; temp/=2) {
+			int val = temp%2;
+			if (val == 0)
+				binary = binary + '1';
+			else
+				binary = binary + '0';
 		}
-
-
-	}
-
-	private static String multiplyStrings(String val1, String val2) {
-		int length = maximum(val1.length(),val2.length());
-		if (length == val1.length())
-			val2 = appendZerosInSmallerString(length,val2);
-		else
-			val1 = appendZerosInSmallerString(length,val1);
-
-		//System.out.println("val1 : " + val1 + " val2: " + val2 + " Length max: " + length);
-		val1 = reverseString(val1);
-		val2 = reverseString(val2);
-		//System.out.println("val1 : " + val1 + " val2: " + val2 + " Length max: " + length);
-		int currentIndex = 0;
-		int isum = 0;
-		char[] multiply = new char[100000];
-		int carryforward = 0;
-		for (int left = 0; left < length; left++) {
-			for (int right = left; right < length && left == 0; right++) {
-				isum = getCrossMultiplyValue(val1,val2,left,right) + carryforward;
-				carryforward = isum/10;
-				multiply[currentIndex++] = (char) (isum % 10 + 48);
-			}
-			if (left > 0) {
-				isum = getCrossMultiplyValue(val1,val2,left,length-1) + carryforward;
-				carryforward = isum/10;
-				multiply[currentIndex++] = (char) (isum % 10 + 48);
-			}
+		//System.out.println(binary);
+		
+		int len = binary.length();
+		int num = 0;
+		int t = 1;
+		for (int i = 0; i < len; i++) {
+			num = num + Integer.parseInt(String.valueOf(binary.charAt(i))) * t;
+			t = t*2;
 		}
-		for ( ; carryforward > 0 ;) {
-			multiply[currentIndex++] = (char) (carryforward % 10 + 48);
-			carryforward/=10;
-		}
-		for( ; currentIndex < 100000 ; currentIndex++) {
-			multiply[currentIndex] = '0';
-		}
-
-		return new String(multiply);
-	}
-
-	private static String reverseString(String s) {
-		int length = s.length();
-		char[] val = new char[length];
-		for (int i = 0 ; i < length ; i++) {
-			val[length-i-1] = s.charAt(i);
-		}
-		return new String(val);
-	}
-
-	private static int getCrossMultiplyValue(String val1, String val2, int left, int right) {
-		int isum = 0;
-		for ( ; left < right; ) {
-			isum += Integer.parseInt(String.valueOf(val1.charAt(left)))*Integer.parseInt(String.valueOf(val2.charAt(right)));
-			isum += Integer.parseInt(String.valueOf(val1.charAt(right)))*Integer.parseInt(String.valueOf(val2.charAt(left)));
-			left++;
-			right--;
-		}
-		if (left == right) {
-			isum += Integer.parseInt(String.valueOf(val1.charAt(left)))*Integer.parseInt(String.valueOf(val2.charAt(left)));
-		}
-		return isum;
-	}
-
-	private static String appendZerosInSmallerString(int length, String val) {
-		char[] zeros = new char[length-val.length()];
-		for (int i = 0; i < length-val.length(); i++) {
-			zeros[i] = '0';
-		}
-		return (new String(zeros)) + val;
-	}
-
-	private static int maximum(int length, int length2) {
-		return length > length2 ? length : length2;
-	}
-
-
+		
+		return num;
+	}*/
+	
 }

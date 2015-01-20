@@ -1,5 +1,8 @@
 package com.akshay.myJavaCollections;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyTree {
 
 	private int val;
@@ -120,9 +123,18 @@ public class MyTree {
 
 		System.out.println("\nLevel Order Traversal:");
 		levelOrderTraversal(tree);
+		
+		String path = findPath(tree,18,"");
+		System.out.println("\nPath to 18 from root: " + path);
 
 		System.out.println("\nReverse Level Order Traversal:");
 		reverseLevelOrderTraversal(tree);
+		
+		// find data values that falls in range in a binary search tree and print them out in ascending order
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		System.out.println("Numbers in the Given Range are :\n");
+		findNumbersInAscendingOrderRange(tree,16,20,list);
+		printList(list);
 
 		// balanced BST - AVL Tree
 		System.out.println("\n AVL Tree\n");
@@ -173,6 +185,43 @@ public class MyTree {
 		//tree5 = splayTheTree(tree5,20);
 		levelOrderTraversal(tree5);
 
+	}
+
+	
+	private static String findPath(MyTree tree, int X, String prefix) {
+		if (tree == null || search(tree,X) == null) return "";
+		else {
+			if (tree.getVal() == X) return prefix + "\"" + String.valueOf(tree.getVal());
+			String temp1 = findPath(tree.getLeft(), X, prefix + "\"" +  String.valueOf(tree.getVal()));
+			String temp2 = findPath(tree.getRight(), X, prefix + "\"" +  String.valueOf(tree.getVal()));
+			if (!temp1.equals(""))
+				return temp1;
+			else
+				return temp2;
+		}
+	}
+
+	private static void findNumbersInAscendingOrderRange(MyTree tree, int low,
+			int high, ArrayList<Integer> list) {
+		if (null == tree || low > high) return;
+		if (tree.getVal() == 18) System.out.println("Found 18");
+		findNumbersInAscendingOrderRange(tree.getLeft(), low, high, list);
+		if (tree.getVal() > high) {
+			if (tree.getVal() == 18) System.out.println("Found 18 again 1");
+			printList(list);
+		}
+		else if (tree.getVal() >= low && tree.getVal() <= high) {
+			if (tree.getVal() == 18) System.out.println("Found 18 again 2");
+			list.add(tree.getVal());
+		}
+		findNumbersInAscendingOrderRange(tree.getRight(), low, high, list);
+	}
+
+	private static void printList(ArrayList<Integer> list) {
+		for (int i = 0; i < list.size(); i++) {
+			System.out.print(list.get(i) + " ");
+		}
+		System.out.println();
 	}
 
 	private static MyTree searchUsingSplay(MyTree tree, int X) {
