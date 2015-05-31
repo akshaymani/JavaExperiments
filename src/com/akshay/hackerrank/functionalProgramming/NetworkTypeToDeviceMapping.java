@@ -114,6 +114,7 @@ public class NetworkTypeToDeviceMapping {
 		} finally {
 			try {
 				if (br != null)br.close();
+				if (br2 != null)br2.close();
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
